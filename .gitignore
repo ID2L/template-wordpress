@@ -1,0 +1,54 @@
+# ----------------------------
+# Contenu de la base de données
+# ----------------------------
+
+# Ignorer les données de la base MySQL
+db_data/
+
+# ----------------------------
+# Contenu généré par WordPress
+# ----------------------------
+
+# Tout le contenu uploadé et généré dynamiquement par WordPress
+wordpress_data/wp-content/uploads/
+wordpress_data/wp-content/cache/
+wordpress_data/wp-content/upgrade/
+wordpress_data/wp-content/backups/
+
+# Fichiers temporaires ou de débogage
+wordpress_data/wp-content/debug.log
+
+# Ignorer tous les plugins sauf les personnalisés
+wordpress_data/wp-content/plugins/*
+!wordpress_data/wp-content/plugins/votre-plugin-personnalise/
+
+# Ignorer tous les thèmes sauf le thème personnalisé
+wordpress_data/wp-content/themes/*
+!wordpress_data/wp-content/themes/votre-theme-personnalise/
+
+# ----------------------------
+# Fichiers sensibles
+# ----------------------------
+
+# Fichiers de configuration WordPress contenant des secrets
+wordpress_data/wp-config.php
+wordpress_data/wp-config-*.php
+
+# ----------------------------
+# Fichiers système et locaux
+# ----------------------------
+
+# Fichiers spécifiques au système ou à l'IDE
+.DS_Store
+.idea/
+.vscode/
+*.code-workspace
+
+# Node.js (si applicable)
+# Ignorer node_modules à la racine ou dans les sous-répertoires
+**/node_modules/
+npm-debug.log
+
+# Docker fichiers locaux
+docker-compose.override.yml
+.env

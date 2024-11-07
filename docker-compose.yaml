@@ -1,0 +1,26 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress
+    ports:
+      - '8080:80' # Le port 8080 sur l'hôte est mappé au port 80 dans le conteneur
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    depends_on:
+      - db
+    volumes:
+      - ./wordpress_data:/var/www/html # Les fichiers WordPress locaux seront dans ./wordpress_data
+
+  db:
+    image: mysql:5.7
+    container_name: wordpress_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+    volumes:
+      - ./db_data:/var/lib/mysql # Les données MySQL locales seront dans ./db_data
