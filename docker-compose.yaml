@@ -1,7 +1,7 @@
 services:
   wordpress:
     image: wordpress:latest
-    container_name: wordpress
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_wp
     ports:
       - '8080:80' # Le port 8080 sur l'hôte est mappé au port 80 dans le conteneur
     environment:
@@ -12,22 +12,22 @@ services:
     depends_on:
       - db
     volumes:
-      - wpfiles:/var/www/html # Volume nommé pour les fichiers WordPress
-      - ./wordpress_data/wp-config.php:/var/www/html/wp-config.php # Montage local pour wp-content
-      - ./wordpress_data/wp-content/updraft:/var/www/html/wp-content/updraft
+      - wordpress_files:/var/www/html # Volume nommé pour les fichiers WordPress
       - ./extended_php.ini:/usr/local/etc/php/conf.d/extended_php.ini # Fichier de configuration PHP personnalisé
 
   db:
     image: mysql:5.7
-    container_name: wordpress_db
+    container_name: ${COMPOSE_PROJECT_NAME:-wordpress}_db
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
     volumes:
-      - dbdata:/var/lib/mysql # Les données MySQL locales seront dans ./db_data
+      - wordpress_db:/var/lib/mysql # Les données MySQL locales seront dans ./db_data
 
 volumes:
-  wpfiles: # Déclaration du volume nommé
-  dbdata:
+  wordpress_files:
+    name: '${COMPOSE_PROJECT_NAME:-wordpress}_wpfiles'
+  wordpress_db:
+    name: '${COMPOSE_PROJECT_NAME:-wordpress}_dbdata'
