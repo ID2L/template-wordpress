@@ -12,7 +12,10 @@ services:
     depends_on:
       - db
     volumes:
-      - ./wordpress_data:/var/www/html # Les fichiers WordPress locaux seront dans ./wordpress_data
+      - wpfiles:/var/www/html # Volume nommé pour les fichiers WordPress
+      - ./wordpress_data/wp-config.php:/var/www/html/wp-config.php # Montage local pour wp-content
+      - ./wordpress_data/wp-content/updraft:/var/www/html/wp-content/updraft
+      - ./extended_php.ini:/usr/local/etc/php/conf.d/extended_php.ini # Fichier de configuration PHP personnalisé
 
   db:
     image: mysql:5.7
@@ -23,4 +26,8 @@ services:
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: wordpress
     volumes:
-      - ./db_data:/var/lib/mysql # Les données MySQL locales seront dans ./db_data
+      - dbdata:/var/lib/mysql # Les données MySQL locales seront dans ./db_data
+
+volumes:
+  wpfiles: # Déclaration du volume nommé
+  dbdata:

@@ -1,7 +1,3 @@
-Voici un exemple de fichier `README.md` pour votre projet WordPress avec Docker :
-
----
-
 # **Projet WordPress avec Docker**
 
 Ce projet contient une configuration Docker pour déployer rapidement un site WordPress avec une base de données MySQL. Vous trouverez également un `.gitignore` pour versionner efficacement le code sans inclure les données sensibles ou inutiles.
@@ -10,7 +6,7 @@ Ce projet contient une configuration Docker pour déployer rapidement un site Wo
 
 ## **Prérequis**
 
-Avant de commencer, assurez-vous d’avoir installé sur votre machine :
+Avant de commencer, assurez-vous d'avoir installé sur votre machine :
 
 - [Docker](https://www.docker.com/products/docker-desktop)
 - [Docker Compose](https://docs.docker.com/compose/install/)
@@ -32,13 +28,25 @@ Avant de commencer, assurez-vous d’avoir installé sur votre machine :
 
 ## **Installation et utilisation**
 
-### Étape 1 : Cloner le dépôt
+### Étape 1 : Utiliser ce template
 
-Clonez ce projet sur votre machine locale :
+#### Option 1 : Via l'interface GitHub
+1. Cliquez sur le bouton vert "Use this template"
+2. Choisissez "Create a new repository"
+   
+Alternativement, vous pouvez cliquer sur "Download ZIP" pour télécharger le projet sans créer de dépôt.
 
+#### Option 2 : Via ligne de commande (Linux)
 ```bash
-git clone https://github.com/votre-utilisateur/votre-projet.git
-cd votre-projet
+wget https://github.com/ID2L/template-wordpress/archive/refs/heads/main.zip -O template.zip
+unzip template.zip
+mv votre-projet-main/* .
+rm -rf votre-projet-main template.zip
+```
+
+Une fois le projet récupéré par l'une des deux méthodes, accédez au répertoire du projet :
+```bash
+cd votre-projet-main
 ```
 
 ### Étape 2 : Lancer les conteneurs
@@ -49,7 +57,7 @@ Démarrez les conteneurs Docker en exécutant la commande suivante :
 docker-compose up -d
 ```
 
-- Le conteneur WordPress sera accessible à l’adresse [http://localhost:8080](http://localhost:8080).
+- Le conteneur WordPress sera accessible à l'adresse [http://localhost:8080](http://localhost:8080).
 - Le conteneur MySQL est configuré pour stocker ses données dans `db_data`.
 
 ### Étape 3 : Configurer WordPress
@@ -58,7 +66,7 @@ docker-compose up -d
 2. Suivez les étapes pour configurer WordPress :
    - Base de données :  
      - Hôte : `db`
-     - Nom d’utilisateur : `wordpress`
+     - Nom d'utilisateur : `wordpress`
      - Mot de passe : `wordpress`
      - Nom de la base : `wordpress`
 
@@ -74,29 +82,43 @@ docker-compose down
 
 ## **Sauvegarde et restauration**
 
-### Sauvegarder les données
+La méthode recommandée pour sauvegarder et restaurer votre site WordPress est d'utiliser le plugin UpdraftPlus.
 
-1. Sauvegardez les fichiers WordPress :
-   ```bash
-   tar -czf wordpress_data.tar.gz wordpress_data/
-   ```
+### Installation d'UpdraftPlus
 
-2. Sauvegardez la base de données MySQL :
-   ```bash
-   docker exec -it wordpress_db mysqldump -u root -p wordpress > wordpress.sql
-   ```
+1. Dans votre interface WordPress, allez dans "Extensions > Ajouter"
+2. Recherchez "UpdraftPlus"
+3. Cliquez sur "Installer maintenant" puis "Activer"
 
-### Restaurer les données
+### Configuration pour un usage local
 
-1. Extrayez les fichiers WordPress :
-   ```bash
-   tar -xzf wordpress_data.tar.gz -C wordpress_data/
-   ```
+1. Accédez aux paramètres d'UpdraftPlus via "Réglages > UpdraftPlus Sauvegardes"
+2. Dans l'onglet "Paramètres" :
+   - Choisissez "Stockage local" comme destination de sauvegarde
+   - Le dossier de sauvegarde par défaut sera `wordpress_data/wp-content/updraft/`
 
-2. Restaurez la base de données MySQL :
-   ```bash
-   docker exec -i wordpress_db mysql -u root -p wordpress < wordpress.sql
-   ```
+### Sauvegarder
+
+1. Dans l'interface d'UpdraftPlus, cliquez sur "Sauvegarder maintenant"
+2. Sélectionnez les éléments à sauvegarder :
+   - Base de données
+   - Plugins
+   - Thèmes
+   - Fichiers uploadés
+   - Autres fichiers WordPress
+3. Cliquez sur "Sauvegarder"
+
+### Restaurer
+
+1. Dans l'interface d'UpdraftPlus :
+   - Soit importez une sauvegarde existante via "Charger une sauvegarde"
+   - Soit sélectionnez une sauvegarde existante dans la liste
+2. Cliquez sur "Restaurer"
+3. Choisissez les composants à restaurer
+4. Suivez les instructions à l'écran
+
+### Note importante
+Les sauvegardes sont stockées dans le dossier `wordpress_data/wp-content/updraft/`. Pour une sauvegarde complète de votre environnement, pensez à sauvegarder ce dossier en lieu sûr.
 
 ---
 
@@ -133,12 +155,12 @@ docker-compose up -d
 
 ## **Contribution**
 
-Si vous souhaitez contribuer à ce projet, n’hésitez pas à ouvrir une **issue** ou une **pull request**.
+Si vous souhaitez contribuer à ce projet, n'hésitez pas à ouvrir une **issue** ou une **pull request**.
 
 ---
 
 ## **Licence**
 
-Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus d’informations.
+Ce projet est sous licence MIT. Consultez le fichier `LICENSE` pour plus d'informations.
 
 ---
